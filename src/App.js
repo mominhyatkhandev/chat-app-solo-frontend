@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import Form from "./modules/Form";
+import Dashboard from "./modules/Dashboard";
 
 const ProtectedRoute = ({ children, auth = false }) => {
   const isLoggedIn = localStorage.getItem("user:token") !== null || false;
@@ -26,7 +27,9 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute auth={true}>{/* <Dashboard/> */}</ProtectedRoute>
+            <ProtectedRoute auth={true}>
+              <Dashboard />
+            </ProtectedRoute>
           }
         />
         <Route
