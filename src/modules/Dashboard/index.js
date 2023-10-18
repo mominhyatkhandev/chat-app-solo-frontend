@@ -15,22 +15,22 @@ const Dashboard = () => {
   const [socket, setSocket] = useState(null);
   const messageRef = useRef(null);
 
-  // useEffect(() => {
-  // 	setSocket(io('http://localhost:8080'))
-  // }, [])
+  useEffect(() => {
+  	setSocket(io('http://localhost:8080'))
+  }, [])
 
-  // useEffect(() => {
-  // 	socket?.emit('addUser', user?.id);
-  // 	socket?.on('getUsers', users => {
-  // 		console.log('activeUsers :>> ', users);
-  // 	})
-  // 	socket?.on('getMessage', data => {
-  // 		setMessages(prev => ({
-  // 			...prev,
-  // 			messages: [...prev.messages, { user: data.user, message: data.message }]
-  // 		}))
-  // 	})
-  // }, [socket])
+  useEffect(() => {
+  	socket?.emit('addUser', user?._id);
+  	socket?.on('getUsers', users => {
+  		console.log('activeUsers :>> ', users);
+  	})
+  	socket?.on('getMessage', data => {
+  		setMessages(prev => ({
+  			...prev,
+  			messages: [...prev.messages, { user: data.user, message: data.message }]
+  		}))
+  	})
+  }, [socket])
 
   useEffect(() => {
     messageRef?.current?.scrollIntoView({ behavior: "smooth" });
@@ -83,7 +83,6 @@ const Dashboard = () => {
   };
 
   const sendMessage = async () => {
-	console.log("SEND MESSAGE", messages?.receiver?.receiverId, user._id, message);
     setMessage("");
     socket?.emit("sendMessage", {
       senderId: user?._id,
