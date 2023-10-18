@@ -15,8 +15,9 @@ const Dashboard = () => {
   const [socket, setSocket] = useState(null);
   const messageRef = useRef(null);
 
+
   useEffect(() => {
-  	setSocket(io('http://localhost:8080'))
+  	setSocket(io(process.env.REACT_APP_SOCKET_PORT || 'http://localhost:8080'));
   }, [])
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const Dashboard = () => {
     const loggedInUser = JSON.parse(localStorage.getItem("user:detail"));
     const fetchConversations = async () => {
       const res = await fetch(
-        `http://localhost:8000/api/conversation/${loggedInUser?._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/conversation/${loggedInUser?._id}`,
         {
           method: "GET",
           headers: {
@@ -56,7 +57,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetch(`http://localhost:8000/api/users/${user._id}`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/${user._id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +71,7 @@ const Dashboard = () => {
 
   const fetchMessages = async (conversationId, receiver) => {
     const res = await fetch(
-      `http://localhost:8000/api/message/${conversationId}?senderId=${user?._id}&&receiverId=${receiver?.receiverId}`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/message/${conversationId}?senderId=${user?._id}&&receiverId=${receiver?.receiverId}`,
       {
         method: "GET",
         headers: {
@@ -90,7 +91,7 @@ const Dashboard = () => {
       message,
       conversationId: messages?.conversationId,
     });
-    const res = await fetch(`http://localhost:8000/api/message`, {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

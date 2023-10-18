@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Img1 from "../../assets/img1.jpg";
+import Button from "../../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const Users = ({users, fetchMessages}) => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('user:token');
+    localStorage.removeItem('user:detail');
+    console.log("YOU ARE LOGOUT");
+    navigate('/users/sign_in');
+  }
+
   return (
     <div>
+      <Button label="Logout" type="button" onClick={handleLogout}></Button>
+      <div className="text-primary text-lg">People</div>
       {users.length > 0 ? (
         users.map(({ userId, user }) => {
           return (
