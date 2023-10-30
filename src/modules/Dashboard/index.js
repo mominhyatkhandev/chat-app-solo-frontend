@@ -31,7 +31,7 @@ const Dashboard = () => {
   			messages: [...prev.messages, { user: data.user, message: data.message }]
   		}))
   	})
-  }, [socket])
+  }, [socket, user?._id])
 
   useEffect(() => {
     messageRef?.current?.scrollIntoView({ behavior: "smooth" });
@@ -286,7 +286,6 @@ const Dashboard = () => {
         )}
       </div>
       <div className="w-[25%] h-screen bg-light px-8 py-16 overflow-scroll">
-        <div className="text-primary text-lg">People</div>
         <Users users={users} fetchMessages={fetchMessages}/>
       </div>
     </div>
